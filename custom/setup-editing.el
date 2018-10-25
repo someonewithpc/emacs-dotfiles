@@ -2,7 +2,9 @@
 (setq global-mark-ring-max 5000         ; increase mark ring to contains 5000 entries
       mark-ring-max 5000                ; increase kill ring to contains 5000 entries
       mode-require-final-newline t      ; add a newline to end of file
-      tab-width 4                       ; default to 4 visible spaces to display a tab
+      tab-width 8                       ; default to 8 visible spaces to display a tab
+      kill-ring-max 5000                ; increase kill-ring capacity
+      kill-whole-line t                 ; if NIL, kill whole line and move the next line up
       )
 
 (add-hook 'sh-mode-hook (lambda ()
@@ -13,14 +15,10 @@
 (set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
 
-(setq-default indent-tabs-mode nil)
-(delete-selection-mode)
-(global-set-key (kbd "RET") 'newline-and-indent)
+;; (setq-default indent-tabs-mode nil)
 
-;; GROUP: Editing -> Killing
-(setq kill-ring-max 5000 ; increase kill-ring capacity
-      kill-whole-line t  ; if NIL, kill whole line and move the next line up
-      )
+(delete-selection-mode)			; Make inserting replace selected text
+;;(global-set-key (kbd "RET") 'newline-and-indent) ;; Using comment-indent-new-line
 
 ;; show whitespace in diff-mode
 (add-hook 'diff-mode-hook (lambda ()
@@ -41,7 +39,10 @@
 ;; GROUP: Editing -> Volatile Highlights
 (use-package volatile-highlights
   :init
-  (volatile-highlights-mode t))
+  (volatile-highlights-mode t)
+  (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
+  (vhl/install-extension 'undo-tree)
+  )
 
 ;; Package: undo-tree
 ;; GROUP: Editing -> Undo -> Undo Tree
@@ -69,7 +70,7 @@
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0))
 
-;; Package: ws-butler
+;; Package: ws-butler (whitespace-butler - cleanly clean trailing whitespace)
 (use-package ws-butler
   :init
   (add-hook 'prog-mode-hook 'ws-butler-mode)
@@ -83,7 +84,7 @@
 
 ;; PACKAGE: anzu
 ;; GROUP: Editing -> Matching -> Isearch -> Anzu
-(use-package anzu
+(use-package anzu			;Display number of matches in search
   :init
   (global-anzu-mode)
   (global-set-key (kbd "M-%") 'anzu-query-replace)
@@ -98,14 +99,13 @@
 ;; Customized functions
 (defun prelude-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
+   Move point to the first non-whitespace character on this line.
+   If point is already there, move to the beginning of the line.
+   Effectively toggle between the first non-whitespace character and
+   the beginning of the line.
 
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first. If
-point reaches the beginning or end of the buffer, stop there."
+   If ARG is not nil or 1, move forward ARG - 1 lines first. If
+   point reaches the beginning or end of the buffer, stop there."
   (interactive "^p")
   (setq arg (or arg 1))
 
@@ -123,7 +123,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single
-line instead."
+   line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (message "Copied line")
@@ -138,8 +138,8 @@ line instead."
      (list (line-beginning-position)
            (line-beginning-position 2)))))
 
-;; kill a line, including whitespace characters until next non-whiepsace character
-;; of next line
+;; kill a line, including whitespace characters until next non
+;; whiepsace character of next line
 (defadvice kill-line (before check-position activate)
   (if (member major-mode
               '(emacs-lisp-mode scheme-mode lisp-mode
@@ -155,7 +155,7 @@ line instead."
 (defvar yank-indent-modes
   '(LaTeX-mode TeX-mode)
   "Modes in which to indent regions that are yanked (or yank-popped).
-Only modes that don't derive from `prog-mode' should be listed here.")
+   Only modes that don't derive from `prog-mode' should be listed here.")
 
 (defvar yank-indent-blacklisted-modes
   '(python-mode slim-mode haml-mode)
@@ -171,7 +171,7 @@ Only modes that don't derive from `prog-mode' should be listed here.")
 
 (defadvice yank (after yank-indent activate)
   "If current mode is one of 'yank-indent-modes,
-indent yanked text (with prefix arg don't indent)."
+   indent yanked text (with prefix arg don't indent)."
   (if (and (not (ad-get-arg 0))
            (not (member major-mode yank-indent-blacklisted-modes))
            (or (derived-mode-p 'prog-mode)
@@ -220,8 +220,7 @@ indent yanked text (with prefix arg don't indent)."
 ;; add duplicate line function from Prelude
 ;; taken from prelude-core.el
 (defun prelude-get-positions-of-line-or-region ()
-  "Return positions (beg . end) of the current line
-or region."
+  "Return positions (beg . end) of the current line or region."
   (let (beg end)
     (if (and mark-active (> (point) (mark)))
         (exchange-point-and-mark))
@@ -253,6 +252,9 @@ Position the cursor at it's beginning, according to the current mode."
   (indent-according-to-mode))
 
 (global-set-key (kbd "M-o") 'prelude-smart-open-line)
-(global-set-key (kbd "M-o") 'open-line)
+(global-set-key (kbd "M-O") 'prelude-smart-open-line-above)
+
+;; (global-set-key (kbd "M-o") 'open-line)
+
 
 (provide 'setup-editing)

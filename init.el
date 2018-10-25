@@ -1,6 +1,11 @@
 (require 'package)
-(add-to-list 'package-archives
-         '("melpa" . "http://melpa.org/packages/") t)
+
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ))
+
+;; (setq debug-on-error t)
 
 (package-initialize)
 
@@ -11,19 +16,26 @@
   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure t) ;; Install from repo if not yet available
+
 
 (add-to-list 'load-path "~/.emacs.d/custom")
 
-(require 'setup-general)
+(require 'setup-general) ;; Require "layers"
 (if (version< emacs-version "24.4")
     (require 'setup-ivy-counsel)
+;; else
   (require 'setup-helm)
-  (require 'setup-helm-gtags))
+  (require 'setup-helm-gtags)
+  )
 ;; (require 'setup-ggtags)
 (require 'setup-cedet)
 (require 'setup-editing)
+(require 'setup-lisp)
 
+(require 'spacemacs-dark-theme)
+
+(use-package multi-term)
 
 
 ;; function-args
@@ -38,7 +50,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (zygospore helm-gtags helm yasnippet ws-butler volatile-highlights use-package undo-tree iedit dtrt-indent counsel-projectile company clean-aindent-mode anzu))))
+    (smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

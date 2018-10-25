@@ -1,0 +1,3 @@
+[submodule "custom/spacemacs-theme"]
+	path = custom/spacemacs-theme
+	url = https://github.com/nashamri/spacemacs-theme
