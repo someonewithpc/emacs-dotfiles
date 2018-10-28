@@ -28,7 +28,7 @@
 (if (version< emacs-version "24.4")
     (require 'setup-ivy-counsel)
 ;; else
-  (require 'setup-helmc)
+  (require 'setup-helm)
   (require 'setup-helm-gtags)
   )
 ;; (require 'setup-ggtags)
