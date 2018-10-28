@@ -9,7 +9,13 @@
 ;; “python”: What Python developers use for extension modules
 ;; “java”: The default style for java-mode (see below)
 ;; “user”: When you want to define your own style
-(setq c-default-style) "java" ;; previously "linux". c-show-syntactic-information is useful
+;;; Code:
+
+;; (setq 'c-default-style ('(c-mode . "java")
+;; 			'(c++-mode . "java")
+;; 			'(java-mode . "java")
+;; 			'(awk-mode . "awk")
+;; 			'(other . "gnu"))) "java" ;; previously "linux". c-show-syntactic-information is useful
 
 ;; show unncessary whitespace that can mess up your diff
 (add-hook 'prog-mode-hook
@@ -21,12 +27,15 @@
 ;; set appearance of a tab that is represented by 4 spaces
 (setq-default tab-width 8)
 
+(setq-default c-basic-offset 8)
+
 ;; setup GDB
 (setq gdb-many-windows t ;; use gdb-many-windows by default
       gdb-show-main t ;; Non-nil means display source file containing the main routine at startup
  )
 
 (use-package cc-mode
+  ;; :init (setq c-basic-offset 8)
   ;; :init
   ;; (define-key c-mode-map  [(tab)] 'company-complete)
   ;; (define-key c++-mode-map  [(tab)] 'company-complete)
@@ -78,5 +87,40 @@
               ("C-c o H" . origami-close-node)
               )
   )
+
+;; (defun my-c-mode-common-hook ()
+;;   ;; my customizations for all of c-mode, c++-mode, objc-mode, java-mode
+;;   ;; (c-set-offset 'substatement-open 0)
+;;   ;; other customizations can go here
+
+;;   (setq c++-tab-always-indent t)
+;;   (setq c-basic-offset 8)                  ;; Default is 2
+;;   (setq c-indent-level 8)                  ;; Default is 2
+
+;;   ;;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
+;;   (setq tab-width 8)
+;;   (setq indent-tabs-mode t)  ; use spaces only if nil
+;;   )
+
+;; (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+;;(setq c-basic-offset 8)
+
+(use-package semantic
+  :config (progn (global-semanticdb-minor-mode 1)
+	       (global-semantic-idle-scheduler-mode 1)
+	       (global-semantic-stickyfunc-mode 1)
+	       (semantic-mode 1))
+  )
+
+(use-package ede
+  :requires cc-mode
+  :init (global-ede-mode)
+  :hook (c-mode-common-hook c-mode-hook c++-mode-hook)
+  :bind (:map c-mode-base-map ("C-c C-j" . semantic-ia-fast-jump)
+         ("C-c C-s" . semantic-ia-show-summary))
+  )
+
+
 
 (provide 'setup-c)
