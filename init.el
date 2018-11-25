@@ -9,8 +9,6 @@
 
 ;; (setq debug-on-error t)
 
-;;(send-string-to-terminal "\e[?1h")
-
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -35,6 +33,7 @@
 (require 'setup-editing)
 (require 'setup-c)
 (require 'setup-lisp)
+(require 'setup-prolog)
 (require 'setup-terminal) ;; Setup for using emacs in a terninal as well as a terminal in emacs
 
 (when (display-graphic-p)
@@ -44,6 +43,7 @@
 (add-to-list 'load-path "~/.emacs.d/custom/spacemacs-theme/")
 (require 'spacemacs-dark-theme)
 
+;; (global-unset-key (kbd "\\"))
 
 ;; function-args
 ;; (require 'function-args)
@@ -57,7 +57,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
+    (highlight-indent-guides highlight-indent-guide indent-guie ediprolog prolog-mode flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

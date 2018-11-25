@@ -56,8 +56,8 @@
   ;;(setq explicit-shell-file-name "/bin/bash")
   )
 
-(use-package multi-term
-  ;; :config (setq multi-term-program "/bin/bash")
-  )
+;; (use-package multi-term
+;;   ;; :config (setq multi-term-program "/bin/bash")
+;;   )
 
 (provide 'setup-terminal)

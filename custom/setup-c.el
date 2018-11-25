@@ -17,18 +17,6 @@
 ;; 			'(awk-mode . "awk")
 ;; 			'(other . "gnu"))) "java" ;; previously "linux". c-show-syntactic-information is useful
 
-;; show unncessary whitespace that can mess up your diff
-(add-hook 'prog-mode-hook
-          (lambda () (interactive)
-            (setq show-trailing-whitespace 1)))
-
-;; DON'T use space to indent by default
-(setq-default indent-tabs-mode t)
-;; set appearance of a tab that is represented by 4 spaces
-(setq-default tab-width 8)
-
-(setq-default c-basic-offset 8)
-
 ;; setup GDB
 (setq gdb-many-windows t ;; use gdb-many-windows by default
       gdb-show-main t ;; Non-nil means display source file containing the main routine at startup
@@ -63,7 +51,7 @@
 ;; Package: projectile
 (use-package projectile
   :init
-  (projectile-global-mode)
+  (projectile-mode)
   (setq projectile-enable-caching t))
 
 ;; ;; Compilation
@@ -118,9 +106,27 @@
   :init (global-ede-mode)
   :hook (c-mode-common-hook c-mode-hook c++-mode-hook)
   :bind (:map c-mode-base-map ("C-c C-j" . semantic-ia-fast-jump)
-         ("C-c C-s" . semantic-ia-show-summary))
+              ("C-c C-s" . semantic-ia-show-summary))
   )
 
 
+(use-package highlight-indent-guides)
+
+
+(add-hook 'prog-mode-hook
+          (lambda () (interactive)
+	    ;; show unncessary whitespace that can mess up your diff
+            (setq show-trailing-whitespace 1)
+
+	    (setq highlight-indent-guides-method 'character)
+	    (highlight-indent-guides-mode)
+	    ;; DON'T use space to indent by default
+	    (setq-default indent-tabs-mode t)
+	    ;; set appearance of a tab that is represented by 4 spaces
+	    (setq-default tab-width 8)
+
+	    (setq-default c-basic-offset 8)
+	    (c-set-offset 'inextern-lang 0)
+	    ))
 
 (provide 'setup-c)
