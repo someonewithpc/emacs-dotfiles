@@ -38,14 +38,14 @@
 (require 'setup-terminal) ;; Setup for using emacs in a terninal as well as a terminal in emacs
 (require 'setup-programming)
 
-(when (display-graphic-p)
-  (unbind-key (kbd "C-z")) ;; Disable suspend-frame in graphical mode. Still useful in terminal mode, though
-  )
-
-(add-to-list 'load-path "~/.emacs.d/config/spacemacs-theme/")
+(add-to-list 'load-path "~/.emacs.d/extern/spacemacs-theme/")
 (require 'spacemacs-dark-theme)
 
 (set-register ?e '(file . "~/.emacs.d/init.el"))
+
+(when (display-graphic-p)
+  (unbind-key (kbd "C-z")) ;; Disable suspend-frame in graphical mode. Still useful in terminal mode, though
+  )
 
 ;; (global-unset-key (kbd "\\"))
 
@@ -61,7 +61,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (semantic-bovine company-irony company-irony-c-headers function-args funtion-args linum-relative highlight-indent-guides highlight-indent-guide indent-guie ediprolog prolog-mode flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
+    (ediprolog semantic-bovine company-irony company-irony-c-headers function-args funtion-args linum-relative highlight-indent-guides highlight-indent-guide indent-guie prolog-mode flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

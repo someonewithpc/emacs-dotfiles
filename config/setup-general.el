@@ -11,27 +11,6 @@
   :bind (("C-x 1" . zygospore-toggle-delete-other-windows))
   )
 
-(use-package rebox2
-  :bind (:map c-mode-base-map ("M-q" . rebox-dwim))
-  )
-
-(use-package smartparens
-  :config (smartparens-global-mode)
-          (smartparens-strict-mode)
-	  ;; pair "`" with "'" in emacs-lisp-mode
-	  ;; (sp-with-modes sp-lisp-modes
-	  ;;   ;; disable ', it's the quote character!
-	  ;;   (sp-local-pair "'" nil :actions nil))
-	  ;;(sp-local-pair 'emacs-lisp-mode "`" "'")
-	  ;; no '' pair in emacs-lisp-mode
-	  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-	  )
-
-(show-paren-mode)
-
-(use-package flycheck
-  :config (global-flycheck-mode))
-
 ;; GROUP: Editing -> Editing Basics
 (setq global-mark-ring-max 5000         ; increase mark ring to contains 5000 entries
       mark-ring-max 5000                ; increase kill ring to contains 5000 entries
