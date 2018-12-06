@@ -65,17 +65,6 @@
   :init
   (add-to-list 'company-backends 'company-c-headers))
 
-;; hs-minor-mode for folding source code
-;; (add-hook 'c-mode-common-hook 'hs-minor-mode)
-;; Use origami instead
-(use-package origami
-  :hook c-mode-hook
-  :bind (:map origami-mode-map
-              ("C-c o S" . origami-show-node)
-              ("C-c o H" . origami-close-node)
-              )
-  )
-
 ;; (defun my-c-mode-common-hook ()
 ;;   ;; my customizations for all of c-mode, c++-mode, objc-mode, java-mode
 ;;   ;; (c-set-offset 'substatement-open 0)
@@ -101,6 +90,53 @@
 	       (semantic-mode 1))
   )
 
+;; (use-package function-args
+;;   :config
+;;   (fa-config-default)
+;;   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;;   (set-default 'semantic-case-fold t)
+;;   )
+
+(use-package company-irony
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-irony))
+(use-package company-irony-c-headers
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-irony-c-headers))
+
+(use-package irony
+  :after (company-irony company-irony-c-headers)
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+  ;; replace the `completion-at-point' and `complete-symbol' bindings in
+  ;; irony-mode's buffers by irony-mode's function
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+;; (use-package semantic-bovine)
+
+(use-package cmake-ide
+  :ensure t
+  :init
+  ;; (setq cmake-ide-flags-c++ (append '("-std=c++11")
+  ;; 				    (mapcar (lambda (path) (concat "-I" path))
+  ;; 					    ;; (semantic-gcc-get-include-paths "c++")
+  ;; 					    )))
+  ;; (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path))
+  ;; 					  ;; (semantic-gcc-get-include-paths "c")
+  ;; 					  )))
+  (cmake-ide-setup))
+
 (use-package ede
   :requires cc-mode
   :init (global-ede-mode)
@@ -109,17 +145,11 @@
               ("C-c C-s" . semantic-ia-show-summary))
   )
 
-
-(use-package highlight-indent-guides)
-
-
 (add-hook 'prog-mode-hook
           (lambda () (interactive)
 	    ;; show unncessary whitespace that can mess up your diff
             (setq show-trailing-whitespace 1)
 
-	    (setq highlight-indent-guides-method 'character)
-	    (highlight-indent-guides-mode)
 	    ;; DON'T use space to indent by default
 	    (setq-default indent-tabs-mode t)
 	    ;; set appearance of a tab that is represented by 4 spaces

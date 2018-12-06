@@ -49,7 +49,7 @@
 (use-package term
   :bind (:map term-raw-map ("C-S-v" . term-paste))
   :config (progn (term-pager-enable)
-		 ;;(add-hook 'term-exec-hook 'kill-term-hook)
+		 (add-hook 'term-exec-hook 'kill-term-hook)
 		 (setq explicit-shell-file-name "/bin/bash")
 		 ;;(setq )
 		 )

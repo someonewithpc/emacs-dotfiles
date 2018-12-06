@@ -6,7 +6,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Package zygospore
+;; Package to make C-x 1 toggle between collapsing and showing other windows
 (use-package zygospore
   :bind (("C-x 1" . zygospore-toggle-delete-other-windows))
   )
@@ -77,26 +77,22 @@
   (global-set-key (kbd "RET") 'newline-and-indent) ;; Using comment-indent-new-line
   )
 
-;; Package: dtrt-indent
 (use-package dtrt-indent
   :init
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0))
 
-;; Package: ws-butler (whitespace-butler - cleanly clean trailing whitespace)
+ ;; whitespace-butler - cleanly clean trailing whitespace
 (use-package ws-butler
   :init
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (add-hook 'text-mode 'ws-butler-mode)
   (add-hook 'fundamental-mode 'ws-butler-mode))
 
-;; PACKAGE: comment-dwim-2
 (use-package comment-dwim-2
   :bind (("M-;" . comment-dwim-2))
   )
 
-;; PACKAGE: anzu
-;; GROUP: Editing -> Matching -> Isearch -> Anzu
 (use-package anzu			;Display number of matches in search
   :init
   (global-anzu-mode)
