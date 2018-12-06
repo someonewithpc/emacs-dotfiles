@@ -13,7 +13,7 @@
 			 ))
 (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/custom")
+(add-to-list 'load-path "~/.emacs.d/config")
 
 ;; (setq debug-on-error t)
 
@@ -42,7 +42,7 @@
   (unbind-key (kbd "C-z")) ;; Disable suspend-frame in graphical mode. Still useful in terminal mode, though
   )
 
-(add-to-list 'load-path "~/.emacs.d/custom/spacemacs-theme/")
+(add-to-list 'load-path "~/.emacs.d/config/spacemacs-theme/")
 (require 'spacemacs-dark-theme)
 
 (set-register ?e '(file . "~/.emacs.d/init.el"))
