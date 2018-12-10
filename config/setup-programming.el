@@ -36,7 +36,6 @@
 
 (use-package smartparens
   :config (smartparens-global-mode)
-  (smartparens-strict-mode)
   ;; pair "`" with "'" in emacs-lisp-mode
   ;; (sp-with-modes sp-lisp-modes
   ;;   ;; disable ', it's the quote character!
@@ -44,7 +43,8 @@
   ;;(sp-local-pair 'emacs-lisp-mode "`" "'")
   ;; no '' pair in emacs-lisp-mode
   (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  )
+  :init
+  (smartparens-strict-mode))
 
 (show-paren-mode)
 
@@ -52,5 +52,13 @@
   :config
   (global-flycheck-mode)
   (setq sentence-end-double-space nil))
+
+(use-package smart-tabs-mode
+  :config
+  (setq-default indent-tabs-mode nil)
+  :init
+  (smart-tabs-insinuate 'c 'c++ 'java)
+  :hook
+  (c-mode-common-hook . (lambda () (setq indent-tabs-mode t))))
 
 (provide 'setup-programming)

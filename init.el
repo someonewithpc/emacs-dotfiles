@@ -61,7 +61,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ediprolog semantic-bovine company-irony company-irony-c-headers function-args funtion-args linum-relative highlight-indent-guides highlight-indent-guide indent-guie prolog-mode flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
+    (smart-tabs-mode smart-tabs ediprolog semantic-bovine company-irony company-irony-c-headers function-args funtion-args linum-relative highlight-indent-guides highlight-indent-guide indent-guie prolog-mode flycheck smartparens multi-term spacemacs-theme rebox rebox2 origami helm-company iedit anzu comment-dwim-2 ws-butler dtrt-indent clean-aindent-mode yasnippet undo-tree volatile-highlights helm-gtags helm-projectile helm-swoop helm zygospore projectile company use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

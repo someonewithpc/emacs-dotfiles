@@ -1,8 +1,12 @@
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
+
+(blink-cursor-mode 0)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -70,6 +74,8 @@
 
 (use-package comment-dwim-2
   :bind (("M-;" . comment-dwim-2))
+  :config
+  (setq comment-dwim-2--inline-comment-behavior 'reindent-comment)
   )
 
 (use-package anzu			;Display number of matches in search

@@ -88,6 +88,10 @@
 
 ;;; Code:
 
+;;;###autoload
+(defun ediprolog ()
+  "Fix loading.")
+
 (defconst ediprolog-version "1.3")
 
 (defgroup ediprolog nil
@@ -165,11 +169,6 @@ default Prolog prompt.")
 
 (defvar ediprolog-interrupted           nil
   "True iff waiting for the previous query was interrupted with C-g.")
-
-;;;###autoload
-(defun ediprolog ()
-  "This fixes the loading, for some reason."
-  )
 
 (defmacro ediprolog-wait-for-prompt-after (&rest forms)
   "Evaluate FORMS and wait for prompt."
