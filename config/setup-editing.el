@@ -156,8 +156,33 @@ Position the cursor at it's beginning, according to the current mode."
   (forward-line -1)
   (indent-according-to-mode))
 
+(defun my/split-line-above ()
+  "Like 'split-line, but does it above."
+  (interactive)
+  (push-mark)
+  (kill-line)
+  (prelude-smart-open-line-above)
+  (yank)
+  (pop-mark))
+
+(defun my/append-to-scratch ()
+  "Append region to sctach bugger"
+  (interactive)
+  (append-to-buffer "*scratch*" (region-beginning) (region-end)))
+
+(global-unset-key (kbd "M-O A")) ;; I suppose this is meant to make arrow keys kind of work,
+(global-unset-key (kbd "M-O B")) ;; but is not useful to me
+(global-unset-key (kbd "M-O C"))
+(global-unset-key (kbd "M-O D"))
+
+(global-set-key (kbd "C-S-y") 'yank-pop) ;; Replace immediate last yank with yank before in kill ring
+(global-set-key (kbd "M-*") 'my/append-to-scratch)
+(global-set-key (kbd "M-u") 'upcase-dwim)
+(global-set-key (kbd "M-l") 'downcase-dwim)
 (global-set-key (kbd "M-o") 'prelude-smart-open-line)
-(global-set-key (kbd "M-O") 'prelude-smart-open-line-above)
+(global-set-key (kbd "M-S-o") 'prelude-smart-open-line-above)
+(global-set-key (kbd "C-M-o") 'split-line)
+(global-set-key (kbd "C-M-S-o") 'my/split-line-above)
 
 ;; (global-set-key (kbd "M-o") 'open-line)
 

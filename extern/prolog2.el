@@ -8,7 +8,7 @@
 ;;          * See below for more details
 ;; Keywords: prolog major mode sicstus swi mercury
 
-(defvar prolog-mode-version "1.25"
+(defvar prolog-mode-version "1.26"
   "Prolog mode version number")
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -379,7 +379,7 @@ The version numbers are of the format (Major . Minor)."
 (defcustom prolog-indent-width tab-width
   "*The indentation width used by the editing buffer."
   :group 'prolog-indentation
-  :type 'integer)  
+  :type 'integer)
 
 (defcustom prolog-align-comments-flag t
   "*Non-nil means automatically align comments when indenting."

@@ -29,90 +29,51 @@
   ;; (define-key c++-mode-map  [(tab)] 'company-complete)
   )
 
-;; company
-(use-package company
-  :requires cc-mode
-  :init
-  (global-company-mode 1)
-  :bind (:map c-mode-map ([C-tab] . 'company-complete)
-	 :map c++-mode-map ([C-tab] . 'company-complete))
-  ;; (delete 'company-semantic company-backends)
-  )
-
-;; (define-key c-mode-map  [(control tab)] 'company-complete)
-;; (define-key c++-mode-map  [(control tab)] 'company-complete)
-
-(use-package helm-company
-  :requires 'company
-  :bind (:map company-mode-map ("C-:" . 'helm-company)
-	      :map company-active-map ("C-:" . 'helm-company))
-  )
-
 ;; Package: projectile
 (use-package projectile
   :init
   (projectile-mode)
   (setq projectile-enable-caching t))
 
-;; ;; Compilation
-;; (global-set-key (kbd "<f5>") (lambda ()
-;;                                (interactive)
-;;                                (setq-local compilation-read-command nil)
-;;                                (call-interactively 'compile)))
+;; company - kind of slow. Useful in emacs-lisp, on the fence for others...
+(use-package company
+  :requires cc-mode
+  :hook ((c-mode
+          c++-mode
+          emacs-lisp-mode)
+         . helm-gtags-mode)
+  :bind (:map c-mode-map ([(control tab)] . 'company-complete)
+         :map c++-mode-map ([(control tab)] . 'company-complete)
+	 :map emacs-lisp-mode-map ([(control tab)] . 'company-complete)))
+
+(use-package helm-company
+  :requires 'company
+  ;; :bind (:map company-mode-map ("C-:" . 'helm-company)
+  ;;             :map company-active-map ("C-:" . 'helm-company))
+  :bind (:map c-mode-map ([(control tab)] . 'helm-company)
+         :map c++-mode-map ([(control tab)] . 'helm-company)
+	 :map emacs-lisp-mode-map ([(control tab)] . 'helm-company)))
 
 ;; company-c-headers
 (use-package company-c-headers
-  :init
+  :config
   (add-to-list 'company-backends 'company-c-headers))
 
-;; (defun my-c-mode-common-hook ()
-;;   ;; my customizations for all of c-mode, c++-mode, objc-mode, java-mode
-;;   ;; (c-set-offset 'substatement-open 0)
-;;   ;; other customizations can go here
-
-;;   (setq c++-tab-always-indent t)
-;;   (setq c-basic-offset 8)                  ;; Default is 2
-;;   (setq c-indent-level 8)                  ;; Default is 2
-
-;;   ;;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
-;;   (setq tab-width 8)
-;;   (setq indent-tabs-mode t)  ; use spaces only if nil
-;;   )
-
-;; (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-
-;;(setq c-basic-offset 8)
-
-(use-package semantic
-  :config (progn (global-semanticdb-minor-mode 1)
-	       (global-semantic-idle-scheduler-mode 1)
-	       (global-semantic-stickyfunc-mode 1)
-	       (semantic-mode 1))
-  )
-
-;; (use-package function-args
-;;   :config
-;;   (fa-config-default)
-;;   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-;;   (set-default 'semantic-case-fold t)
-;;   )
-
 (use-package company-irony
-  :ensure t
+  :after (company)
   :config
   (add-to-list 'company-backends 'company-irony))
+
 (use-package company-irony-c-headers
-  :ensure t
+  :after (company company-irony)
   :config
   (add-to-list 'company-backends 'company-irony-c-headers))
 
 (use-package irony
   :after (company-irony company-irony-c-headers)
   :ensure t
+  :hook (('c++-mode-hook'c-mode-hook 'emacs-lisp-mode-hook) . 'irony-mode)
   :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
   ;; replace the `completion-at-point' and `complete-symbol' bindings in
   ;; irony-mode's buffers by irony-mode's function
   (defun my-irony-mode-hook ()
@@ -123,19 +84,33 @@
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
+(use-package semantic
+  :config (progn
+            (global-semanticdb-minor-mode 1)
+            (global-semantic-idle-scheduler-mode 1)
+            (global-semantic-stickyfunc-mode 1)
+            (semantic-mode 1)))
+
+;; (use-package function-args
+;;   :config
+;;   (fa-config-default)
+;;   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;;   (set-default 'semantic-case-fold t)
+;;   )
+
 ;; (use-package semantic-bovine)
 
-(use-package cmake-ide
-  :ensure t
-  :init
-  ;; (setq cmake-ide-flags-c++ (append '("-std=c++11")
-  ;; 				    (mapcar (lambda (path) (concat "-I" path))
-  ;; 					    ;; (semantic-gcc-get-include-paths "c++")
-  ;; 					    )))
-  ;; (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path))
-  ;; 					  ;; (semantic-gcc-get-include-paths "c")
-  ;; 					  )))
-  (cmake-ide-setup))
+;; (use-package cmake-ide
+;;   :ensure t
+;;   :init
+;;   ;; (setq cmake-ide-flags-c++ (append '("-std=c++11")
+;;   ;; 				    (mapcar (lambda (path) (concat "-I" path))
+;;   ;; 					    ;; (semantic-gcc-get-include-paths "c++")
+;;   ;; 					    )))
+;;   ;; (setq cmake-ide-flags-c (append (mapcar (lambda (path) (concat "-I" path))
+;;   ;; 					  ;; (semantic-gcc-get-include-paths "c")
+;;   ;; 					  )))
+;;   (cmake-ide-setup))
 
 (use-package ede
   :requires cc-mode
@@ -151,7 +126,7 @@
             (setq show-trailing-whitespace 1)
 
 	    ;; DON'T use space to indent by default
-	    (setq-default indent-tabs-mode t)
+	    (setq-default indent-tabs-mode nil)
 	    ;; set appearance of a tab that is represented by 4 spaces
 	    (setq-default tab-width 8)
 

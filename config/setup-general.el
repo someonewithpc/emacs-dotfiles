@@ -30,10 +30,11 @@
 (delete-selection-mode)			; Make inserting replace selected text
 
 ;; show whitespace in diff-mode
-(add-hook 'diff-mode-hook (lambda () (setq-local whitespace-style
-						 '(face tabs tab-mark spaces space-mark trailing
-							indentation::space indentation::tab
-							newline newline-mark))
+(add-hook 'diff-mode-hook (lambda ()
+                            (setq-local whitespace-style
+                                        '(face tabs tab-mark spaces space-mark trailing
+                                               indentation::space indentation::tab
+                                               newline newline-mark))
                             (whitespace-mode 1)))
 
 ;; Package: volatile-highlights

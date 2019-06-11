@@ -9,14 +9,14 @@
   ;; (highlight-indent-guides-mode)
   )
 
-(use-package company
-  :ensure t
-  :init
-  (global-company-mode)
-  :bind (("<backtab>" . company-complete-common-or-cycle))
-  :config
-  ;; (delete 'company-backends 'company-clang)
-  )
+;; (use-package company
+;;   :ensure t
+;;   :init
+;;   (global-company-mode)
+;;   :bind (("<backtab>" . company-complete-common-or-cycle))
+;;   :config
+;;   ;; (delete 'company-backends 'company-clang)
+;;   )
 
 ;; origami for folding source code
 (use-package origami
@@ -27,8 +27,9 @@
               )
   )
 
-(use-package linum-relative
-  :init (linum-relative-global-mode))
+;; SLOW
+;; (use-package linum-relative
+;;   :init (linum-relative-global-mode))
 
 (use-package rebox2
   :bind (:map c-mode-base-map ("M-q" . rebox-dwim))

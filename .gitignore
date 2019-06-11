@@ -11,3 +11,7 @@ bookmarks
 recentf
 custom/*
 !custom/README.md
+.mc-lists.el
+irony/
+projectile.cache
+tramp
