@@ -37,7 +37,6 @@
 (require 'setup-prolog)
 (require 'setup-terminal) ;; Setup for using emacs in a terninal as well as a terminal in emacs
 (require 'setup-programming)
-(require 'setup-latex)
 
 ;; (use-package sudo-edit)
 ;; (use-package auto-sudoedit
@@ -62,9 +61,6 @@
          ("M-S-<down>" . drag-stuff-down)
          ("M-S-<left>" . drag-stuff-left)
          ("M-S-<right>" . drag-stuff-right)))
-
-(add-to-list 'load-path "~/.emacs.d/extern/spacemacs-theme/")
-(require 'spacemacs-dark-theme)
 
 (set-register ?e '(file . "~/.emacs.d/init.el"))
 
@@ -120,6 +116,7 @@ is binary, activate `hexl-mode'."
      ("Atril"
       ("atril --page-index=%(outpage) %o")
       "atril"))))
+ '(custom-enabled-themes (quote (tango-dark)))
  '(custom-safe-themes
    (quote
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
