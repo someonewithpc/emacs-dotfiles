@@ -1,0 +1,3 @@
+[submodule "extern/php-cs-fixer"]
+	path = extern/php-cs-fixer
+	url = git@github.com:someonewithpc/php-cs-fixer.git

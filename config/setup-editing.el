@@ -166,9 +166,11 @@ Position the cursor at it's beginning, according to the current mode."
   (pop-mark))
 
 (defun my/append-to-scratch ()
-  "Append region to sctach bugger"
+  "Append region to scratch buffer."
   (interactive)
-  (append-to-buffer "*scratch*" (region-beginning) (region-end)))
+  (append-to-buffer "*scratch*" (region-beginning) (region-end))
+  (keyboard-quit)
+  )
 
 (global-unset-key (kbd "M-O A")) ;; I suppose this is meant to make arrow keys kind of work,
 (global-unset-key (kbd "M-O B")) ;; but is not useful to me
@@ -180,11 +182,16 @@ Position the cursor at it's beginning, according to the current mode."
 (global-set-key (kbd "M-u") 'upcase-dwim)
 (global-set-key (kbd "M-l") 'downcase-dwim)
 (global-set-key (kbd "M-o") 'prelude-smart-open-line)
-(global-set-key (kbd "M-S-o") 'prelude-smart-open-line-above)
+(global-set-key (kbd "M-O") 'prelude-smart-open-line-above)
 (global-set-key (kbd "C-M-o") 'split-line)
 (global-set-key (kbd "C-M-S-o") 'my/split-line-above)
 
-;; (global-set-key (kbd "M-o") 'open-line)
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c"     . mc/edit-lines)
+         ("C-S-<down>"      . mc/mark-next-like-this)
+         ("C-S-<up>"        . mc/mark-previous-like-this)
+         ("<C-S-kp-insert>" . mc/mark-all-like-this)))
 
+(put 'downcase-region 'disabled nil)
 
 (provide 'setup-editing)

@@ -1,20 +1,3 @@
-;; (defun my-term-mode-hook ()
-;;   "Foo."
-;;   (define-key term-raw-map (kbd "C-y") 'term-paste)
-;;   (define-key term-raw-map (kbd "C-k")
-;;     (lambda ()
-;;       (interactive)
-;;       (term-send-raw-string "\C-k")
-;;       (kill-line))))
-;; (add-hook 'term-mode-hook 'my-term-mode-hook)
-
-;; ;; Run C programs directly from within emacs
-;; (defun execute-c-program ()
-;;   "Compile and run current C file."
-;;   (interactive)
-;;   (shell-command (concat "bash -c \"gcc " (buffer-file-name) " && ./a.out\"" )))
-;; 1
-;; (global-set-key [C-f1] 'execute-c-program)
 
 (when (not (display-graphic-p))
   ;; I'm not sure why, but when running in a terminal other than in a TTY, for some reason, the arrow keys don't work
@@ -27,6 +10,10 @@
     (define-key arrow-keys-map "D" 'backward-char))
   (xterm-mouse-mode)
   (setq frame-resize-pixelwise t)
+  )
+
+(when (display-graphic-p)
+  (unbind-key (kbd "C-z")) ;; Disable suspend-frame in graphical mode. Still useful in terminal mode, though
   )
 
 (set-terminal-coding-system 'utf-8)

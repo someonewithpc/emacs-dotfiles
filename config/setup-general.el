@@ -24,8 +24,8 @@
       kill-whole-line t                 ; if NIL, kill whole line and move the next line up
       )
 
-(add-hook 'sh-mode-hook (lambda ()
-                          (setq tab-width 4)))
+;; (add-hook 'sh-mode-hook (lambda ()
+;;                           (setq tab-width 4)))
 
 (delete-selection-mode)			; Make inserting replace selected text
 
@@ -50,10 +50,10 @@
   :init
   (global-undo-tree-mode 1))
 
-(use-package yasnippet
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook 'yas-minor-mode))
+;; (use-package yasnippet
+;;   :defer t
+;;   :init
+;;   (add-hook 'prog-mode-hook 'yas-minor-mode))
 
 (use-package clean-aindent-mode
   :init
@@ -97,5 +97,43 @@
 ;;(global-set-key (kbd "RET") 'comment-indent-new-line) ;; 'newline-and-indent)
 
 (windmove-default-keybindings) ;; Shift + arrows to change between windows
+
+(defun buffer-binary-p (&optional buffer)
+  "Return whether BUFFER or the current buffer is binary.
+
+A binary buffer is defined as containing at least on null byte.
+
+Returns either nil, or the position of the first null byte."
+  (with-current-buffer (or buffer (current-buffer))
+    (save-excursion
+      (goto-char (point-min))
+      (search-forward (string ?\x00) nil t 1))))
+
+(defun hexl-if-binary ()
+  "If `hexl-mode' is not already active, and the current buffer
+is binary, activate `hexl-mode'."
+  (interactive)
+  (unless (eq major-mode 'hexl-mode)
+    (when (buffer-binary-p)
+      (hexl-mode))))
+
+(add-hook 'find-file-hooks 'hexl-if-binary)
+
+(global-set-key (kbd "<M-up>") 'scroll-up-line)
+(global-set-key (kbd "<M-down>") 'scroll-down-line)
+(global-set-key (kbd "C-j") 'join-line)
+(global-set-key (kbd "C-x SPC") 'cua-rectangle-mark-mode)
+(global-set-key (kbd "M-c") 'capitalize-dwim)
+
+(setq-default truncate-lines t)
+
+(use-package xclip
+  :config (xclip-mode))
+
+(use-package drag-stuff
+  :bind (("M-S-<up>" . drag-stuff-up)
+         ("M-S-<down>" . drag-stuff-down)
+         ("M-S-<left>" . drag-stuff-left)
+         ("M-S-<right>" . drag-stuff-right)))
 
 (provide 'setup-general)

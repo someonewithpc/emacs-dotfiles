@@ -16,14 +16,13 @@
               ("C-c g f" . ggtags-find-file)
               ("C-c g c" . ggtags-create-tags)
               ("C-c g u" . ggtags-update-tags)
-              ("C-c g a" . helm-gtags-tags-in-this-function)
               ("M-."     . ggtags-find-tag-dwim)
               ("M-,"     . pop-tag-mark)
               ("C-c <"   . ggtags-prev-mark)
-              ("C-c >"   . ggtags-next-mark)))
-
-
-;;(setq helm-gtags-prefix-key "\C-cg")
+              ("C-c >"   . ggtags-next-mark)
+              ;; Why would it override these!?
+              ("M-<"     . beginning-of-buffer)
+              ("M->"     . end-of-buffer)))
 
 (use-package helm-gtags
   :after (ggtags helm)
@@ -50,6 +49,7 @@
               ("C-c g a" . helm-gtags-tags-in-this-function)
               ("M-."     . helm-gtags-dwim)
               ("M-,"     . helm-gtags-select)
+              ("C-c g a" . helm-gtags-tags-in-this-function)
               ("C-c <"   . helm-gtags-previous-history)
               ("C-c >"   . helm-gtags-next-history)))
               ;;("C-S-j"   . helm-gtags-select)

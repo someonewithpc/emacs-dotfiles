@@ -3,36 +3,16 @@
 
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
+  :config (setq highlight-indent-guides-method 'character)
+  )
+
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  :bind (("<backtab>" . company-complete-common-or-cycle))
   :config
-  (setq highlight-indent-guides-method 'character)
-  ;; :init
-  ;; (highlight-indent-guides-mode)
-  )
-
-;; (use-package company
-;;   :ensure t
-;;   :init
-;;   (global-company-mode)
-;;   :bind (("<backtab>" . company-complete-common-or-cycle))
-;;   :config
-;;   ;; (delete 'company-backends 'company-clang)
-;;   )
-
-;; origami for folding source code
-(use-package origami
-  :hook c-mode-hook
-  :bind (:map origami-mode-map
-              ("C-c o S" . origami-show-node)
-              ("C-c o H" . origami-close-node)
-              )
-  )
-
-;; SLOW
-;; (use-package linum-relative
-;;   :init (linum-relative-global-mode))
-
-(use-package rebox2
-  :bind (:map c-mode-base-map ("M-q" . rebox-dwim))
+  ;; (delete 'company-backends 'company-clang)
   )
 
 (use-package smartparens
@@ -45,7 +25,8 @@
   ;; no '' pair in emacs-lisp-mode
   (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
   :init
-  (smartparens-strict-mode))
+  (smartparens-strict-mode)
+  )
 
 (show-paren-mode)
 
@@ -54,12 +35,20 @@
   (global-flycheck-mode)
   (setq sentence-end-double-space nil))
 
-(use-package smart-tabs-mode
-  :config
-  (setq-default indent-tabs-mode nil)
-  :init
-  (smart-tabs-insinuate 'c 'c++ 'java)
-  :hook
-  (c-mode-common-hook . (lambda () (setq indent-tabs-mode t))))
+;; (use-package smart-tabs-mode
+;;   :config
+;;   (setq-default indent-tabs-mode nil)
+;;   :init
+;;   (smart-tabs-insinuate 'c 'c++ 'java)
+;;   :hook
+;;   (c-mode-common-hook . (lambda () (setq indent-tabs-mode t))))
+
+(use-package folding
+  :hook (php-mode . folding-mode)
+  :bind (("C-c <tab>" . folding-toggle-show-hide)
+         ("C-c <C-tab>" . folding-whole-buffer))
+  :config (add-to-list 'after-save-hook 'folding-whole-buffer)
+  )
+
 
 (provide 'setup-programming)

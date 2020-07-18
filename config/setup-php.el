@@ -35,4 +35,10 @@
                          (puthash (match-string 1) t hash))
                        (setq my-php-symbol-hash hash))))))))
 
+(add-hook 'php-mode-hook (lambda () (require 'php-align) (php-align-setup)))
+
+;; (require 'php-cs-fixer "~/.emacs.d/extern/php-cs-fixer/php-cs-fixer.el")
+;; (add-hook 'after-save-hook 'php-cs-fixer-after-save)
+
+(provide 'setup-php)
 ;;; setup-php.el ends here
