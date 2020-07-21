@@ -131,9 +131,17 @@ is binary, activate `hexl-mode'."
   :config (xclip-mode))
 
 (use-package drag-stuff
-  :bind (("M-S-<up>" . drag-stuff-up)
-         ("M-S-<down>" . drag-stuff-down)
-         ("M-S-<left>" . drag-stuff-left)
+  :bind (("M-S-<up>"    . drag-stuff-up)
+         ("M-S-<down>"  . drag-stuff-down)
+         ("M-S-<left>"  . drag-stuff-left)
          ("M-S-<right>" . drag-stuff-right)))
+
+(global-set-key (kbd "C-c C-$") 'toggle-truncate-lines)
+
+;; Horizontal scrolling mouse events should actually scroll left and right.
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive)
+				    (if truncate-lines (scroll-right 1))))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive)
+				    (if truncate-lines (scroll-left 1))))
 
 (provide 'setup-general)

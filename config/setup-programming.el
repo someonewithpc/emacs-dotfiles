@@ -6,14 +6,14 @@
   :config (setq highlight-indent-guides-method 'character)
   )
 
-(use-package company
-  :ensure t
-  :init
-  (global-company-mode)
-  :bind (("<backtab>" . company-complete-common-or-cycle))
-  :config
-  ;; (delete 'company-backends 'company-clang)
-  )
+;; (use-package company
+;;   :ensure t
+;;   :init
+;;   (global-company-mode)
+;;   :bind (("<backtab>" . company-complete-common-or-cycle))
+;;   :config
+;;   ;; (delete 'company-backends 'company-clang)
+;;   )
 
 (use-package smartparens
   :config (smartparens-global-mode)
