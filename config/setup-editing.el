@@ -172,6 +172,12 @@ Position the cursor at it's beginning, according to the current mode."
   (keyboard-quit)
   )
 
+(defun to-snake-case ()
+  "Convert region to snake case."
+  (interactive)
+  (replace-regexp "\\([A-Z]\\)" "_\\1" nil (region-beginning) (region-end))
+  (downcase-region (region-beginning) (region-end)))
+
 (global-unset-key (kbd "M-O A")) ;; I suppose this is meant to make arrow keys kind of work,
 (global-unset-key (kbd "M-O B")) ;; but is not useful to me
 (global-unset-key (kbd "M-O C"))
@@ -191,6 +197,9 @@ Position the cursor at it's beginning, according to the current mode."
          ("C-S-<down>"      . mc/mark-next-like-this)
          ("C-S-<up>"        . mc/mark-previous-like-this)
          ("<C-S-kp-insert>" . mc/mark-all-like-this)))
+
+(use-package duplicate-thing
+  :bind (("C-c C-d" . duplicate-thing)))
 
 (put 'downcase-region 'disabled nil)
 

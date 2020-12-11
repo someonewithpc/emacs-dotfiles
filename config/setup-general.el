@@ -8,6 +8,8 @@
 
 (blink-cursor-mode 0)
 
+(column-number-mode)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Package to make C-x 1 toggle between collapsing and showing other windows

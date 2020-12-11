@@ -35,39 +35,39 @@
   (projectile-mode)
   (setq projectile-enable-caching t))
 
-;; company - kind of slow. Useful in emacs-lisp, on the fence for others...
-(use-package company
-  :requires cc-mode
-  :hook ((c-mode
-          c++-mode
-          emacs-lisp-mode)
-         . helm-gtags-mode)
-  :bind (:map c-mode-map ([(control tab)] . 'company-complete)
-         :map c++-mode-map ([(control tab)] . 'company-complete)
-	 :map emacs-lisp-mode-map ([(control tab)] . 'company-complete)))
+;; ;; company - kind of slow. Useful in emacs-lisp, on the fence for others...
+;; (use-package company
+;;   :requires cc-mode
+;;   :hook ((c-mode
+;;           c++-mode
+;;           emacs-lisp-mode)
+;;          . helm-gtags-mode)
+;;   :bind (:map c-mode-map ([(control tab)] . 'company-complete)
+;;          :map c++-mode-map ([(control tab)] . 'company-complete)
+;; 	 :map emacs-lisp-mode-map ([(control tab)] . 'company-complete)))
 
-(use-package helm-company
-  :requires 'company
-  ;; :bind (:map company-mode-map ("C-:" . 'helm-company)
-  ;;             :map company-active-map ("C-:" . 'helm-company))
-  :bind (:map c-mode-map ([(control tab)] . 'helm-company)
-         :map c++-mode-map ([(control tab)] . 'helm-company)
-	 :map emacs-lisp-mode-map ([(control tab)] . 'helm-company)))
+;; (use-package helm-company
+;;   :requires 'company
+;;   ;; :bind (:map company-mode-map ("C-:" . 'helm-company)
+;;   ;;             :map company-active-map ("C-:" . 'helm-company))
+;;   :bind (:map c-mode-map ([(control tab)] . 'helm-company)
+;;          :map c++-mode-map ([(control tab)] . 'helm-company)
+;; 	 :map emacs-lisp-mode-map ([(control tab)] . 'helm-company)))
 
-;; company-c-headers
-(use-package company-c-headers
-  :config
-  (add-to-list 'company-backends 'company-c-headers))
+;; ;; company-c-headers
+;; (use-package company-c-headers
+;;   :config
+;;   (add-to-list 'company-backends 'company-c-headers))
 
-(use-package company-irony
-  :after (company)
-  :config
-  (add-to-list 'company-backends 'company-irony))
+;; (use-package company-irony
+;;   :after (company)
+;;   :config
+;;   (add-to-list 'company-backends 'company-irony))
 
-(use-package company-irony-c-headers
-  :after (company company-irony)
-  :config
-  (add-to-list 'company-backends 'company-irony-c-headers))
+;; (use-package company-irony-c-headers
+;;   :after (company company-irony)
+;;   :config
+;;   (add-to-list 'company-backends 'company-irony-c-headers))
 
 (use-package irony
   :after (company-irony company-irony-c-headers)
@@ -88,7 +88,7 @@
   :config (progn
             (global-semanticdb-minor-mode 1)
             (global-semantic-idle-scheduler-mode 1)
-            (global-semantic-stickyfunc-mode 1)
+            ;; (global-semantic-stickyfunc-mode 1)
             (semantic-mode 1)))
 
 ;; (use-package function-args
@@ -120,6 +120,9 @@
               ("C-c C-s" . semantic-ia-show-summary))
   )
 
+(define-key c-mode-map (kbd "C-c C-d") nil)
+(define-key c++-mode-map (kbd "C-c C-d") nil)
+
 (add-hook 'prog-mode-hook
           (lambda () (interactive)
 	    ;; show unncessary whitespace that can mess up your diff
@@ -128,10 +131,11 @@
 	    ;; DON'T use space to indent by default
 	    (setq-default indent-tabs-mode nil)
 	    ;; set appearance of a tab that is represented by 4 spaces
-	    (setq-default tab-width 8)
+	    (setq-default tab-width 4)
 
-	    (setq-default c-basic-offset 8)
+	    (setq-default c-basic-offset 4)
 	    (c-set-offset 'inextern-lang 0)
+        (global-set-key (kbd "C-c C-d") 'duplicate-thing)
 	    ))
 
 (provide 'setup-c)
