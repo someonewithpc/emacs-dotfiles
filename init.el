@@ -56,7 +56,7 @@
  '(ggtags-sort-by-nearness t)
  '(ggtags-use-idutils t)
  '(package-selected-packages
-   '(cmake-mode pdf-tools duplicate-thing activity-watch-mode zygospore xclip ws-butler web-mode volatile-highlights use-package undo-tree twig-mode tramp-auto-auth sql-indent smartparens smart-tabs-mode rebox2 pandoc-mode pandoc multiple-cursors material-theme markdown-mode+ iedit highlight-indent-guides helm-tramp helm-swoop helm-projectile helm-gtags helm-company haskell-mode gmpl-mode ggtags folding fold-dwim flycheck ewal-spacemacs-themes ewal-doom-themes elpy dumb-jump dtrt-indent drag-stuff dockerfile-mode docker-compose-mode company-php company-irony-c-headers company-irony company-c-headers comment-dwim-2 clean-aindent-mode auctex anzu ac-php)))
+   '(cmake-mode pdf-tools duplicate-thing zygospore xclip ws-butler web-mode volatile-highlights use-package undo-tree twig-mode tramp-auto-auth sql-indent smartparens smart-tabs-mode rebox2 pandoc-mode pandoc multiple-cursors material-theme markdown-mode+ iedit highlight-indent-guides helm-tramp helm-swoop helm-projectile helm-gtags helm-company haskell-mode gmpl-mode ggtags folding fold-dwim flycheck ewal-spacemacs-themes ewal-doom-themes elpy dumb-jump dtrt-indent drag-stuff dockerfile-mode docker-compose-mode company-php company-irony-c-headers company-irony company-c-headers comment-dwim-2 clean-aindent-mode auctex anzu ac-php)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

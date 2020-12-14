@@ -35,8 +35,6 @@
 ;;                          (puthash (match-string 1) t hash))
 ;;                        (setq my-php-symbol-hash hash))))))))
 
-(global-activity-watch-mode)
-
 (add-hook 'php-mode-hook
           (lambda ()
             (require 'php-align)
