@@ -1,7 +1,12 @@
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode -1)
+
+(if (eq window-system 'x)
+    (progn
+      (scroll-bar-mode -1)
+      (use-package xclip
+        :config (xclip-mode))))
 
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
@@ -128,9 +133,6 @@ is binary, activate `hexl-mode'."
 (global-set-key (kbd "M-c") 'capitalize-dwim)
 
 (setq-default truncate-lines t)
-
-(use-package xclip
-  :config (xclip-mode))
 
 (use-package drag-stuff
   :bind (("M-S-<up>"    . drag-stuff-up)
