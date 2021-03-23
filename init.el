@@ -43,6 +43,10 @@
 (require 'setup-terminal) ;; Setup for using emacs in a terninal as well as a terminal in emacs
 (require 'setup-programming)
 
+(set-face-attribute 'default nil :height 120)
+
+(add-to-list 'auto-mode-alist '("\\.tsx$" . rjsx-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -15,3 +15,5 @@ custom/*
 irony/
 projectile.cache
 tramp
+
+transient/*

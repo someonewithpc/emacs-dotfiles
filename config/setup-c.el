@@ -138,4 +138,6 @@
         (global-set-key (kbd "C-c C-d") 'duplicate-thing)
 	    ))
 
+(use-package cmake-mode)
+
 (provide 'setup-c)
