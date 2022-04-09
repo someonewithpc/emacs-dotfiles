@@ -1,9 +1,9 @@
-(use-package ivy
-  :init
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (global-set-key (kbd "C-c s") 'swiper)))
+;; (use-package ivy
+;;   :init
+;;   (progn
+;;     (ivy-mode 1)
+;;     (setq ivy-use-virtual-buffers t)
+;;     (global-set-key (kbd "C-c s") 'swiper)))
 
 ;; (use-package counsel
 ;;   :bind

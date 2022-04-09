@@ -47,6 +47,7 @@
 ;; Package: volatile-highlights
 ;; GROUP: Editing -> Volatile Highlights
 (use-package volatile-highlights
+  :defer 2
   :init
   (volatile-highlights-mode t)
   (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
@@ -54,6 +55,7 @@
   )
 
 (use-package undo-tree
+  :defer 2
   :init
   (global-undo-tree-mode 1))
 
@@ -63,30 +65,35 @@
 ;;   (add-hook 'prog-mode-hook 'yas-minor-mode))
 
 (use-package clean-aindent-mode
+  :defer 2
   :init
   (add-hook 'prog-mode-hook 'clean-aindent-mode)
   (global-set-key (kbd "RET") 'newline-and-indent) ;; Using comment-indent-new-line
   )
 
 (use-package dtrt-indent
+  :defer 2
   :init
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0))
 
  ;; whitespace-butler - cleanly clean trailing whitespace
 (use-package ws-butler
+  :defer 2
   :init
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (add-hook 'text-mode 'ws-butler-mode)
   (add-hook 'fundamental-mode 'ws-butler-mode))
 
 (use-package comment-dwim-2
+  :defer 2
   :bind (("M-;" . comment-dwim-2))
   :config
   (setq comment-dwim-2--inline-comment-behavior 'reindent-comment)
   )
 
 (use-package anzu			;Display number of matches in search
+  :defer 1
   :init
   (global-anzu-mode)
   (global-set-key (kbd "M-%") 'anzu-query-replace)
@@ -94,6 +101,7 @@
 
 ;; PACKAGE: iedit
 (use-package iedit
+  :defer 3
   :bind (("C-;" . iedit-mode))
   :init
   (setq iedit-toggle-key-default nil))
@@ -135,6 +143,7 @@ is binary, activate `hexl-mode'."
 (setq-default truncate-lines t)
 
 (use-package drag-stuff
+  :defer 1
   :bind (("M-S-<up>"    . drag-stuff-up)
          ("M-S-<down>"  . drag-stuff-down)
          ("M-S-<left>"  . drag-stuff-left)
@@ -148,4 +157,11 @@ is binary, activate `hexl-mode'."
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive)
 				    (if truncate-lines (scroll-left 1))))
 
+;; (use-package straight)
+
+;; (use-package gruber-darker-theme
+;;   :straight t)
+
 (provide 'setup-general)
+
+;;; setup-general.el ends here

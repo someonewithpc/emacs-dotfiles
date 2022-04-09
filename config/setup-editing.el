@@ -193,14 +193,14 @@ Position the cursor at it's beginning, according to the current mode."
 (global-set-key (kbd "C-M-S-o") 'my/split-line-above)
 
 (use-package multiple-cursors
+  :defer 2
   :bind (("C-S-c C-S-c"     . mc/edit-lines)
          ("C-S-<down>"      . mc/mark-next-like-this)
          ("C-S-<up>"        . mc/mark-previous-like-this)
          ("<C-S-kp-insert>" . mc/mark-all-like-this)))
 
 (use-package duplicate-thing
+  :defer 2
   :bind (("C-c C-d" . duplicate-thing)))
-
-(put 'downcase-region 'disabled nil)
 
 (provide 'setup-editing)

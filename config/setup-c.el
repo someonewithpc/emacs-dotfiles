@@ -31,6 +31,7 @@
 
 ;; Package: projectile
 (use-package projectile
+  :defer 2
   :init
   (projectile-mode)
   (setq projectile-enable-caching t))
@@ -70,9 +71,10 @@
 ;;   (add-to-list 'company-backends 'company-irony-c-headers))
 
 (use-package irony
+  :defer 2
   :after (company-irony company-irony-c-headers)
   :ensure t
-  :hook (('c++-mode-hook'c-mode-hook 'emacs-lisp-mode-hook) . 'irony-mode)
+  :hook (('c++-mode-hook 'c-mode-hook 'emacs-lisp-mode-hook) . 'irony-mode)
   :config
   ;; replace the `completion-at-point' and `complete-symbol' bindings in
   ;; irony-mode's buffers by irony-mode's function
@@ -84,12 +86,12 @@
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
-(use-package semantic
-  :config (progn
-            (global-semanticdb-minor-mode 1)
-            (global-semantic-idle-scheduler-mode 1)
-            ;; (global-semantic-stickyfunc-mode 1)
-            (semantic-mode 1)))
+;; (use-package semantic
+;;   :config (progn
+;;             (global-semanticdb-minor-mode 1)
+;;             (global-semantic-idle-scheduler-mode 1)
+;;             ;; (global-semantic-stickyfunc-mode 1)
+;;             (semantic-mode 1)))
 
 ;; (use-package function-args
 ;;   :config
@@ -112,13 +114,14 @@
 ;;   ;; 					  )))
 ;;   (cmake-ide-setup))
 
-(use-package ede
-  :requires cc-mode
-  :init (global-ede-mode)
-  :hook (c-mode-common-hook c-mode-hook c++-mode-hook)
-  :bind (:map c-mode-base-map ("C-c C-j" . semantic-ia-fast-jump)
-              ("C-c C-s" . semantic-ia-show-summary))
-  )
+;; (use-package ede
+;;   :defer 2
+;;   :requires cc-mode
+;;   :init (global-ede-mode)
+;;   :hook (c-mode-common-hook c-mode-hook c++-mode-hook)
+;;   :bind (:map c-mode-base-map ("C-c C-j" . semantic-ia-fast-jump)
+;;               ("C-c C-s" . semantic-ia-show-summary))
+;;   )
 
 (define-key c-mode-map (kbd "C-c C-d") nil)
 (define-key c++-mode-map (kbd "C-c C-d") nil)
@@ -138,6 +141,7 @@
         (global-set-key (kbd "C-c C-d") 'duplicate-thing)
 	    ))
 
-(use-package cmake-mode)
+(use-package cmake-mode
+  :defer 5)
 
 (provide 'setup-c)

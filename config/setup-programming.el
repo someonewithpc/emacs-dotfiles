@@ -2,6 +2,7 @@
 ;;; Code:
 
 (use-package highlight-indent-guides
+  :defer 1
   :hook (prog-mode . highlight-indent-guides-mode)
   :config (setq highlight-indent-guides-method 'character)
   )
@@ -16,6 +17,7 @@
 ;;   )
 
 (use-package smartparens
+  :defer 1
   :config (smartparens-global-mode)
   ;; pair "`" with "'" in emacs-lisp-mode
   ;; (sp-with-modes sp-lisp-modes
@@ -31,6 +33,7 @@
 (show-paren-mode)
 
 (use-package flycheck
+  :defer 1
   :config
   (global-flycheck-mode)
   (setq sentence-end-double-space nil))
@@ -43,12 +46,10 @@
 ;;   :hook
 ;;   (c-mode-common-hook . (lambda () (setq indent-tabs-mode t))))
 
+(add-hook 'prog-mode 'hs-minor-mode)
+
 (use-package folding
   :hook (php-mode . folding-mode)
-  :bind (("C-c <tab>" . folding-toggle-show-hide)
-         ("C-c <C-tab>" . folding-whole-buffer))
-  :config (add-to-list 'after-save-hook 'folding-whole-buffer)
   )
-
 
 (provide 'setup-programming)

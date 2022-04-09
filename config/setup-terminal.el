@@ -34,6 +34,7 @@
 (eval-after-load 'term (add-hook 'term-exec-hook 'kill-term-hook))
 
 (use-package term
+  :defer 1
   :bind (:map term-raw-map ("C-S-v" . term-paste))
   :config (progn (term-pager-enable)
 		 (add-hook 'term-exec-hook 'kill-term-hook)

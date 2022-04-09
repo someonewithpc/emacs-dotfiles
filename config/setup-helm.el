@@ -2,6 +2,7 @@
 
 ;;; Code:
 (use-package helm
+  :defer 1
   :init
   (progn
     (require 'helm-config)
@@ -113,6 +114,7 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; Locate the helm-swoop folder to your path
     (use-package helm-swoop
+      :defer 2
       :bind (("C-c h o" . helm-swoop)
              ("C-c s" . helm-multi-swoop-all))
       :config
@@ -137,6 +139,7 @@
     (helm-mode 1)
 
     (use-package helm-projectile
+      :defer 5
       :init
       (helm-projectile-on)
       (setq projectile-completion-system 'helm)

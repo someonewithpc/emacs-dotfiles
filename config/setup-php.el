@@ -1,12 +1,26 @@
 
 ;;; Code:
 
-(use-package sql-indent)
-(use-package php-mode)
-(use-package web-mode)
+(use-package sql-indent
+  :defer 2)
+(use-package php-mode
+  :defer 2
+  :bind (:map php-mode-map
+              ("C-x C-e" . php-send-region)
+              ("C-c C-r" . revert-buffer)
+              )
+  )
 
-(use-package ac-php-core)
-(use-package ac-php)
+(use-package web-mode
+  :defer 2)
+
+(use-package flycheck-phpstan
+  :defer 5
+  :hook (('php-mode-hook (flycheck-mode t)))
+  )
+
+;; (use-package ac-php-core)
+;; (use-package ac-php)
 
 ;; (use-package company-php
 ;;   :after (php company)
@@ -41,7 +55,7 @@
             (php-align-setup)
             (add-hook 'after-save-hook (lambda () (revert-buffer t t t) (folding-whole-buffer)))))
 
-(define-key php-mode-map (kbd "C-c C-d") nil)
+;; (define-key php-mode-map (kbd "C-c C-d") nil)
 
 ;; (require 'php-cs-fixer "~/.emacs.d/extern/php-cs-fixer/php-cs-fixer.el")
 ;; (add-hook 'after-save-hook 'php-cs-fixer-after-save)

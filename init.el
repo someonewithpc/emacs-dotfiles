@@ -5,6 +5,22 @@
 
 ;;; Code:
 
+
+;; ;;; ----------- straight.el bootstrap -----------
+;; (defvar bootstrap-version)
+;; (let ((bootstrap-file
+;;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+;;       (bootstrap-version 5))
+;;   (unless (file-exists-p bootstrap-file)
+;;     (with-current-buffer
+;;         (url-retrieve-synchronously
+;;          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+;;          'silent 'inhibit-cookies)
+;;       (goto-char (point-max))
+;;       (eval-print-last-sexp)))
+;;   (load bootstrap-file nil 'nomessage))
+;; ;;; --------- straight.el bootstrap end ---------
+
 (require 'package)
 
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -34,7 +50,7 @@
 ;; Require "layers"
 (require 'setup-general)
 (require 'setup-helm)
-;; (require 'setup-helm-gtags)
+(require 'setup-helm-gtags)
 (require 'setup-editing)
 (require 'setup-c)
 (require 'setup-php)
@@ -54,17 +70,20 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (tango-dark)))
- '(custom-safe-themes
-   (quote
-    ("c7901691c1dd0d501f6ba5a296490d8b85f550aa0ece175b37008ea453b0a0bd" default)))
+ '(ansi-color-names-vector
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+ '(create-lockfiles nil)
+ '(custom-enabled-themes '(tango-dark))
+ '(flycheck-phpstan-executable "\"/home/hugo/software/social/bin/phpstan\"")
+ '(folding-internal-margins nil)
  '(ggtags-enable-navigation-keys nil)
- '(ggtags-extra-args (quote ("--skip-unreadable")))
+ '(ggtags-extra-args '("--skip-unreadable"))
  '(ggtags-sort-by-nearness t)
  '(ggtags-use-idutils t)
  '(package-selected-packages
-   (quote
-    (cmake-mode pdf-tools duplicate-thing zygospore xclip ws-butler web-mode volatile-highlights use-package undo-tree twig-mode tramp-auto-auth sql-indent smartparens smart-tabs-mode rebox2 pandoc-mode pandoc multiple-cursors material-theme markdown-mode+ iedit highlight-indent-guides helm-tramp helm-swoop helm-projectile helm-gtags helm-company haskell-mode gmpl-mode ggtags folding fold-dwim flycheck ewal-spacemacs-themes ewal-doom-themes elpy dumb-jump dtrt-indent drag-stuff dockerfile-mode docker-compose-mode company-php company-irony-c-headers company-irony company-c-headers comment-dwim-2 clean-aindent-mode auctex anzu ac-php))))
+   '(typescript-mode straight rainbow-mode gruber-darker-theme hideshowvis hs-minor-mode neon-mode php-align flycheck-phpstan phpstan lsp-mode vue-mode po-mode cmake-mode pdf-tools duplicate-thing zygospore xclip ws-butler web-mode volatile-highlights use-package undo-tree twig-mode tramp-auto-auth sql-indent smartparens smart-tabs-mode rebox2 pandoc-mode pandoc multiple-cursors material-theme markdown-mode+ iedit highlight-indent-guides helm-tramp helm-swoop helm-projectile helm-gtags helm-company haskell-mode gmpl-mode ggtags folding fold-dwim flycheck ewal-spacemacs-themes ewal-doom-themes elpy dumb-jump dtrt-indent drag-stuff dockerfile-mode docker-compose-mode company-php company-irony-c-headers company-irony company-c-headers comment-dwim-2 clean-aindent-mode auctex anzu ac-php))
+ '(safe-local-variable-values '((php-project-root . auto)))
+ '(sgml-basic-offset 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -72,4 +91,8 @@
  ;; If there is more than one, they won't work right.
  )
 (put 'scroll-left 'disabled nil)
+(put 'scroll-right 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+;;; init.el ends here
