@@ -64,6 +64,9 @@
 ;;   Still, stale byte-code will cause *heavy* losses in startup efficiency.
 (setq load-prefer-newer noninteractive)
 
+;; Prevemt package.el from doing anything, since we'll use straight.el
+(setq package-enable-at-startup nil)
+
 ;; UX: Respect DEBUG envvar as an alternative to --debug-init, and to make are
 ;;   startup sufficiently verbose from this point on.
 (when (getenv-internal "DEBUG")
