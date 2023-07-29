@@ -276,15 +276,6 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
                      ;; `file-name-handler-alist' since startup we want to preserve.
                      (delete-dups (append file-name-handler-alist old-value))))))
 
-;;; ---------- auto-mode ----------
-;;; Support for more file extensions
-;; Add support for additional file extensions.
-(dolist (entry '(("/LICENSE\\'" . text-mode)
-                 ("\\.log\\'" . text-mode)
-                 ("rc\\'" . conf-mode)
-                 ("\\.hex\\'" . hexl-mode)))
-  (push entry auto-mode-alist))
-;;; ---------- auto-mode ----------
 
 (provide 'defaults)
 ;;; defaults.el ends here
