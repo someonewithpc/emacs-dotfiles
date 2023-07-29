@@ -2,10 +2,9 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(dolist (file '(defaults automode))
+(dolist (file '(defaults utils automode straight))
   (load (expand-file-name (file-name-concat "lisp/" file) user-emacs-directory) nil (not init-file-debug) nil 'must-suffix)
   )
-
 
 
 ;; ;; The GC introduces annoying pauses and stuttering into our Emacs experience,
