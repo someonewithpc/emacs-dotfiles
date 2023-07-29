@@ -244,6 +244,38 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
 (dolist (var '(exec-path load-path process-environment))
   (put var 'initial-value (default-toplevel-value var)))
 
+
+;; From Doom Emacs (MIT license)
+;; PERF: `file-name-handler-alist' is consulted on each call to `require',
+;;   `load', or various file/io functions (like `expand-file-name' or
+;;   `file-remote-p'). You get a noteable boost to startup time by unsetting
+;;   or simplifying its value.
+(let ((old-value (default-toplevel-value 'file-name-handler-alist)))
+  (setq file-name-handler-alist
+        ;; HACK: If the bundled elisp for this Emacs install isn't
+        ;;   byte-compiled (but is compressed), then leave the gzip file
+        ;;   handler there so Emacs won't forget how to read read them.
+        ;;
+        ;;   calc-loaddefs.el is our heuristic for this because it is built-in
+        ;;   to all supported versions of Emacs, and calc.el explicitly loads
+        ;;   it uncompiled. This ensures that the only other, possible
+        ;;   fallback would be calc-loaddefs.el.gz.
+        (if (eval-when-compile
+              (locate-file-internal "calc-loaddefs.el" load-path))
+            nil
+          (list (rassq 'jka-compr-handler old-value))))
+  ;; Make sure the new value survives any current let-binding.
+  (set-default-toplevel-value 'file-name-handler-alist file-name-handler-alist)
+  ;; Remember it so it can be reset where needed.
+  (put 'file-name-handler-alist 'initial-value old-value)
+  ;; COMPAT: ...but restore `file-name-handler-alist' later, because it is
+  ;;   needed for handling encrypted or compressed files, among other things.
+  (add-hook! 'emacs-startup-hook :depth 101
+    (lambda () (setq file-name-handler-alist
+                     ;; Merge instead of overwrite because there may have been changes to
+                     ;; `file-name-handler-alist' since startup we want to preserve.
+                     (delete-dups (append file-name-handler-alist old-value))))))
+
 ;;; ---------- auto-mode ----------
 ;;; Support for more file extensions
 ;; Add support for additional file extensions.
