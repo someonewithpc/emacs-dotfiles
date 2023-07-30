@@ -59,6 +59,9 @@
 ;;   cause stuttering/freezes.
 (setq gc-cons-threshold most-positive-fixnum)
 
+(when noninteractive
+  (setq user-emacs-directory (file-name-directory load-file-name)))
+
 ;; PERF: Don't use precious startup time checking mtime on elisp bytecode.
 ;;   Ensuring correctness is 'doom sync's job, not the interactive session's.
 ;;   Still, stale byte-code will cause *heavy* losses in startup efficiency.
