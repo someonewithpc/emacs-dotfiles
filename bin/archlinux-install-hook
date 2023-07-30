@@ -1,0 +1,7 @@
+#!/bin/sh
+
+HOOKS_DIR=$(grep HookDir /etc/pacman.conf | cut -d= -f2 | xargs)
+
+mkdir -p "${HOOKS_DIR}" || exit 1
+
+EMACS_USER_DIR=$(git rev-parse --show-toplevel) envsubst < bin/recompile-when-upgrading-emacs.hook > "${HOOKS_DIR}recompile-when-upgrading-emacs.hook" || exit 1

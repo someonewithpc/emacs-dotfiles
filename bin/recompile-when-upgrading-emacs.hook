@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = emacs
+
+[Action]
+Description = Recompile native code when emacs updates
+When = PostTransaction
+Exec = $EMACS_USER_DIR/bin/custom-emacs-recompile-native
