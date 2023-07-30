@@ -143,12 +143,12 @@
 ;;   produce ugly flashes of unstyled Emacs.
 (setq-default inhibit-redisplay t
               inhibit-message t)
-(add-hook 'after-init-hook
+(add-hook 'emacs-startup-hook
           (lambda ()
             (setq-default inhibit-redisplay nil
-                          ;; Inhibiting `message' only prevents redraws and
                           inhibit-message nil)
-            (redraw-frame)))
+            (redraw-frame))
+          100)
 
 
 ;; Allow the user to store custom.el-saved settings and themes in their Doom
@@ -270,11 +270,12 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
   (put 'file-name-handler-alist 'initial-value old-value)
   ;; COMPAT: ...but restore `file-name-handler-alist' later, because it is
   ;;   needed for handling encrypted or compressed files, among other things.
-  (add-hook 'emacs-startup-hook :depth 101
-    (lambda () (setq file-name-handler-alist
-                     ;; Merge instead of overwrite because there may have been changes to
-                     ;; `file-name-handler-alist' since startup we want to preserve.
-                     (delete-dups (append file-name-handler-alist old-value))))))
+  (add-hook 'emacs-startup-hook
+            (lambda () (setq file-name-handler-alist
+                             ;; Merge instead of overwrite because there may have been changes to
+                             ;; `file-name-handler-alist' since startup we want to preserve.
+                             (delete-dups (append file-name-handler-alist old-value))))
+            101))
 
 
 (provide 'defaults)
