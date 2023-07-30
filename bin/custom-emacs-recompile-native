@@ -1,0 +1,3 @@
+#!/bin/sh
+
+time emacs --batch --load ~/.emacs.d/early-init.el
