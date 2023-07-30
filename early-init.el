@@ -87,7 +87,7 @@
 ;;   To reduce that burden -- and since Doom doesn't load any dynamic modules
 ;;   -- I remove `.so' from `load-suffixes' and pass the `must-suffix' arg to
 ;;   `load'. See the docs of `load' for details.
-(if (let ((load-suffixes '(".eln" ".elc" ".el")))
-      (load (expand-file-name "init" user-emacs-directory) nil (not init-file-debug) nil 'must-suffix)))
+(if (let ((load-suffixes '(".eln" ".elc" ".el"))))
+    (load (expand-file-name "init" user-emacs-directory) nil (not init-file-debug) nil 'must-suffix))
 
 ;;; early-init.el ends here

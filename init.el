@@ -1,9 +1,9 @@
 ;;; init.el --- Description -*- lexical-binding: t; -*-
 
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 
-(dolist (file '(defaults utils automode straight))
-  (load (expand-file-name (file-name-concat "lisp/" file) user-emacs-directory) nil (not init-file-debug) nil 'must-suffix)
+(dolist (file '(utils defaults automode straight))
+  (load (expand-file-name (file-name-concat "lisp/" (symbol-name file)) user-emacs-directory) nil (not init-file-debug) nil 'must-suffix)
   )
 
 

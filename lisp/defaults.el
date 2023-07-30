@@ -270,7 +270,7 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
   (put 'file-name-handler-alist 'initial-value old-value)
   ;; COMPAT: ...but restore `file-name-handler-alist' later, because it is
   ;;   needed for handling encrypted or compressed files, among other things.
-  (add-hook! 'emacs-startup-hook :depth 101
+  (add-hook 'emacs-startup-hook :depth 101
     (lambda () (setq file-name-handler-alist
                      ;; Merge instead of overwrite because there may have been changes to
                      ;; `file-name-handler-alist' since startup we want to preserve.
