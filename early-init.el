@@ -95,7 +95,7 @@
 (setq load-suffixes '(".eln" ".elc" ".el"))
 (add-hook 'emacs-startup-hook (lambda () (setq load-suffixes (default-toplevel-value 'load-suffixes))))
 
-(when noninteractive (load (expand-file-name "init" user-emacs-directory)))
+(when noninteractive (load (expand-file-name "init" user-emacs-directory) nil (not init-file-debug) nil 'must-suffix))
 
 ;;(let ((load-suffixes '(".eln" ".elc" ".el")))
 ;;  (load (expand-file-name "init" user-emacs-directory) nil (not init-file-debug) nil 'must-suffix))
