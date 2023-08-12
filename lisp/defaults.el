@@ -277,6 +277,17 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
                              (delete-dups (append file-name-handler-alist old-value))))
             101))
 
+(blink-cursor-mode 0)
+(column-number-mode)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq global-mark-ring-max 5000         ; increase mark ring to contains 5000 entries
+      mark-ring-max 5000                ; increase kill ring to contains 5000 entries
+      mode-require-final-newline t      ; add a newline to end of file
+      kill-whole-line t                 ; if NIL, kill whole line and move the next line up
+      )
+
+(delete-selection-mode)			; Make inserting replace selected text
 
 (provide 'defaults)
 ;;; defaults.el ends here
