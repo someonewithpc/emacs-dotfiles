@@ -23,8 +23,8 @@
   (vhl/install-extension 'undo-tree))
 
 (use-package ws-butler
-  :defer 1
-  :hook ((prog-mode text-mode fundamental-mode) . ws-butler-mode))
+  :init (ws-butler-global-mode)
+)
 
 ;; Display number of matches in search
 (use-package anzu			
