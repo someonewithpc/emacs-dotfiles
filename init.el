@@ -2,7 +2,7 @@
 
 (add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 
-(dolist (file `(utils defaults automode straight packages ,@(when noninteractive '(trigger-compilation)) keybinds benchmark))
+(dolist (file `(utils defaults automode straight theme packages ,@(when noninteractive '(trigger-compilation)) keybinds benchmark))
   (load (expand-file-name (file-name-concat "lisp/" (symbol-name file)) user-emacs-directory) nil (not init-file-debug) nil 'must-suffix)
   )
 
