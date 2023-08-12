@@ -5,6 +5,5 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-
-
-	      
+(put 'overwrite-mode 'disabled "Overwrite mode is disabled becuase it's crap.")
+(global-set-key [remap overwrite-mode] 'ignore)
