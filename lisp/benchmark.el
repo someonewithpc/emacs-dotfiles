@@ -2,7 +2,7 @@
 
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (message "Doom loaded %d packages in %.03fs"
+            (message "Emacs loaded %d packages in %.03fs"
                      (- (length load-path) (length (get 'load-path 'initial-value)))
                       (float-time (time-subtract (current-time) before-init-time))))
           100)
