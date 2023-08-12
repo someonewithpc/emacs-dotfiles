@@ -59,6 +59,9 @@
 ;;   cause stuttering/freezes.
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; UX: Set a dark color as soon as possible to reduce flashing
+(setq default-frame-alist '((background-color . "black") (foreground-color . "white")))
+
 (when noninteractive
   (setq user-emacs-directory (file-name-directory load-file-name)))
 
