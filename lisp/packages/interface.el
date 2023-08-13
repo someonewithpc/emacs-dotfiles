@@ -1,7 +1,11 @@
 (when (not (eq window-system 'x))
   (use-package xclip
     :defer 0.5
-    :config (xclip-mode))
+    :config (xclip-mode)
+    :hook (kill-emacs . (lambda ()
+			  (xclip-deactivate)
+			  (xclip-mode -1)))
+    )
   )
 
 ;; Package to make C-x 1 toggle between collapsing and showing other windows
