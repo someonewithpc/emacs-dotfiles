@@ -289,5 +289,26 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
 
 (delete-selection-mode)			; Make inserting replace selected text
 
+(setq custom-monospace-font (font-spec :size 16))
+(dolist (tuple `((default . ,custom-monospace-font)
+		 (fixed-pitch . ,custom-monospace-font)))
+  (when-let ((face (car tuple))
+	     (font (cdr tuple)))
+    (dolist (frame (frame-list))
+        (when (display-multi-font-p frame)
+          (set-face-attribute face frame
+                              :width 'normal :weight 'normal
+                              :slant 'normal :font font)))
+
+    (put face 'face-modified nil)
+
+    (let ((fn (lambda (el) (member el (font-family-list)))))
+      (when-let (font (cl-find-if fn '("Segoe UI Symbol")))
+        (set-fontset-font t 'symbol font))
+      (when-let (font (cl-find-if fn '("Segoe UI Emoji" "Noto Color Emoji" "Noto Emoji")))
+        (set-fontset-font t 'unicode font))
+      )
+  ))
+
 (provide 'defaults)
 ;;; defaults.el ends here
