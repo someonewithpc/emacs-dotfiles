@@ -16,3 +16,18 @@
   :straight nil
   :init (require 'tramp-compat)
   )
+
+(use-package hexl
+  :ensure t
+  :commands (hexl-mode)
+  :hook
+  (find-file . (lambda ()
+		 "Use hexl-mode if opening a binary file (containing NUL bytes)"
+		 (unless (eq major-mode 'hexl-mode)
+		   (when (with-current-buffer (or buffer (current-buffer))
+			   (save-excursion
+			     (goto-char (point-min))
+			     (search-forward (string ?\x00) nil t 1)))
+		     (hexl-mode)))
+		 ))
+  )
