@@ -37,4 +37,7 @@
 	 ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
   :config (global-anzu-mode))
 
+(use-package windmove
+  :config (windmove-default-keybindings))
+
 (provide 'interface)
