@@ -5,8 +5,5 @@
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-material-dark t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
