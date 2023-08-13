@@ -30,6 +30,21 @@
 		 ))
   )
 
+(use-package string-inflection
+  :init (defvar custom--string-inflection-invoked-with-universal-argument-point nil "Remember if the last invocation was with a universal argument.")
+  :bind ("M-c" . (lambda ()
+		   (interactive)
+		   (if (or current-prefix-arg (eq custom--string-inflection-invoked-with-universal-argument-point (point)))
+		       (progn
+			 (setq custom--string-inflection-invoked-with-universal-argument-point (point))
+			 (string-inflection-all-cycle)
+			 (goto-char custom--string-inflection-invoked-with-universal-argument-point))
+		     (setq custom--string-inflection-invoked-with-universal-argument-point nil)
+		     (upcase-char 1))))
+  )
+
+; setFooBar
+
 (use-package wucuo
   :hook ((prog-mode text-mode) . wucuo-start)
   :config (setq wucuo-flyspell-start-mode "fast"
