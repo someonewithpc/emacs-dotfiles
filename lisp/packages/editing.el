@@ -31,3 +31,11 @@
 		     (hexl-mode)))
 		 ))
   )
+
+(use-package wucuo
+  :hook ((prog-mode text-mode) . wucuo-start)
+  :config (setq wucuo-flyspell-start-mode "fast"
+		wucuo-update-interval 0.5
+		ispell-program-name "aspell"
+		ispell-extra-args '("--run-together"))
+  )
