@@ -1,9 +1,9 @@
-(when (not (eq window-system 'x))
-  (use-package xclip
+(unless (display-graphic-p)
+    (use-package xclip
     :defer 0.5
     :config (xclip-mode)
     :hook (kill-emacs . (lambda ()
-			  (xclip-deactivate)
+			  (when (fboundp 'xclip-deactivate) (xclip-deactivate))
 			  (xclip-mode -1)))
     )
   )

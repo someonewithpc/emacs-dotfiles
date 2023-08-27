@@ -22,6 +22,7 @@
 
 ;; but block until native compilation has finished
 (while (or comp-files-queue (> (comp-async-runnings) 0))
+  (message ".")
   (sleep-for 1))
 
 (message "Compilation finished!")
