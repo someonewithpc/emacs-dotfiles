@@ -310,5 +310,7 @@ Otherwise, `en/disable-command' (in novice.el.gz) is hardcoded to write them to
       )
   ))
 
+(setq-default indent-tabs-mode nil)
+
 (provide 'defaults)
 ;;; defaults.el ends here
