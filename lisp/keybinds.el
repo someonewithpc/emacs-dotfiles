@@ -13,20 +13,20 @@
 
 (defun move-beginning-of-line-logical ()
   (interactive)
-  (if (not (bolp))
-      (move-beginning-of-line nil)
-    (back-to-indentation)))
+  (if (not (= (point) (save-excursion (back-to-indentation) (point))))
+      (back-to-indentation)
+    (move-beginning-of-line nil)))
 
 (defun move-end-of-line-logical ()
   (interactive)
-  (if (not (eolp))
-      (move-end-of-line nil)
-    (let ((comment-pos (save-excursion
-                         (move-end-of-line nil)
-                         (comment-search-backward (line-beginning-position) t)))) ;; adasd
-      (if comment-pos
-          (goto-char (1- comment-pos))
-        (move-end-of-line nil)))))
+  (let ((comment-pos (save-excursion
+                       (move-end-of-line nil)
+                       (comment-search-backward (line-beginning-position) t))))
+    (if (or (eolp) (and comment-pos (/= (point) (1- comment-pos)))) ;; asdasd
+        (if comment-pos
+            (goto-char (1- comment-pos))
+          (move-end-of-line nil))
+      (move-end-of-line nil))))
 
 (global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-logical)
 (global-set-key [remap move-end-of-line] #'move-end-of-line-logical)
