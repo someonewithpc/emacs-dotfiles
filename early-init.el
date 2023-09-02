@@ -98,6 +98,10 @@
 (setq load-suffixes '(".eln" ".elc" ".el"))
 (add-hook 'emacs-startup-hook (lambda () (setq load-suffixes (default-toplevel-value 'load-suffixes))))
 
+(let ((eln-cache-dir (concat (file-name-as-directory user-emacs-directory) "local/eln-cache")))
+  (when (file-directory-p eln-cache-dir)
+    (add-to-list 'load-path (car (directory-files eln-cache-dir t "^[^.]")))))
+
 (when noninteractive (load (expand-file-name "init" user-emacs-directory) nil (not init-file-debug) nil 'must-suffix))
 
 ;;(let ((load-suffixes '(".eln" ".elc" ".el")))
