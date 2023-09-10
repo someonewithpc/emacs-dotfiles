@@ -12,21 +12,29 @@
 (global-set-key [remap overwrite-mode] 'ignore)
 
 (defun move-beginning-of-line-logical ()
+  "Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line."
   (interactive)
-  (if (not (= (point) (save-excursion (back-to-indentation) (point))))
-      (back-to-indentation)
-    (move-beginning-of-line nil)))
+  (let ((initial-pos (point)))
+    (back-to-indentation)
+    (when (= (point) initial-pos)
+      (move-beginning-of-line nil))))
 
 (defun move-end-of-line-logical ()
+  "Move point to the end of the line.
+If there's a comment, move to the beginning of the comment.
+If point is already there, move to the actual end of the line."
   (interactive)
-  (let ((comment-pos (save-excursion
-                       (move-end-of-line nil)
-                       (comment-search-backward (line-beginning-position) t))))
-    (if (or (eolp) (and comment-pos (/= (point) (1- comment-pos)))) ;; asdasd
-        (if comment-pos
-            (goto-char (1- comment-pos))
-          (move-end-of-line nil))
-      (move-end-of-line nil))))
+  (let ((initial-pos (point))
+        (eol-pos (line-end-position)))
+    (if (and comment-start
+             (search-backward comment-start (line-beginning-position) t))
+        (progn
+          (while (and (> (point) (line-beginning-position))
+                      (looking-back (regexp-quote comment-start) (line-beginning-position)))
+            (backward-char))
+          (skip-syntax-backward " "))
+      (goto-char eol-pos))))
 
 (global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-logical)
 (global-set-key [remap move-end-of-line] #'move-end-of-line-logical)
