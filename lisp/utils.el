@@ -13,5 +13,11 @@ See `eval-if!' for details on this macro's purpose."
   (when (eval cond)
     (macroexp-progn body)))
 
+(defun apply-partially-right (fun &rest args)
+  "Return a function that is a partial application of FUN to ARGS.
+ARGS are applied to the right of any arguments provided later."
+  (lambda (&rest front-args)
+    (apply fun (append front-args args))))
+
 (provide 'utils)
 ;;; utils.el ends here
