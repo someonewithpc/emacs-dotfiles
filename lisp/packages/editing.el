@@ -56,3 +56,11 @@
 		ispell-program-name "aspell"
 		ispell-extra-args '("--run-together"))
   )
+
+(use-package drag-stuff
+  :hook (emacs-startup . drag-stuff-mode)
+  :bind (("M-S-<up>" . drag-stuff-up)
+         ("M-S-<down>" . drag-stuff-down)
+         ("M-S-<left>" . drag-stuff-left)
+         ("M-S-<right>" . drag-stuff-right))
+  )
