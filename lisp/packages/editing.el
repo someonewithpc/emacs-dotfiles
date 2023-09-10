@@ -1,6 +1,10 @@
 (use-package undo-tree
   :hook (after-init . global-undo-tree-mode)
   :config
+  (dolist (folder '(backups autosaves undo-tree))
+    (let ((dir (expand-file-name (file-name-concat "local/tmp/" (symbol-name folder)) user-emacs-directory)))
+      (unless (file-exists-p dir)
+        (make-directory dir t))))
   (setq backup-directory-alist `(("." . ,(expand-file-name "local/tmp/backups/" user-emacs-directory)))
 	auto-save-file-name-transforms `((".*" ,(expand-file-name "local/tmp/autosaves/" user-emacs-directory) t))
 	undo-tree-history-directory-alist `(("." . ,(expand-file-name "local/tmp/undo-tree/" user-emacs-directory))))
