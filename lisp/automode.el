@@ -5,7 +5,9 @@
 (dolist (entry '(("/LICENSE\\'" . text-mode)
                  ("\\.log\\'" . text-mode)
                  ("rc\\'" . conf-mode)
-                 ("\\.hex\\'" . hexl-mode)))
+                 ("\\.hex\\'" . hexl-mode)
+                 ("CMakeLists\\.txt\\'" . cmake-ts-mode)
+                 ("\\.cmake\\'" . cmake-ts-mode)))
   (push entry auto-mode-alist))
 
 (provide 'automode)
