@@ -38,3 +38,32 @@ If point is already there, move to the actual end of the line."
 
 (global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-logical)
 (global-set-key [remap move-end-of-line] #'move-end-of-line-logical)
+
+;; Reload Emacs
+(setq desktop-dirname (expand-file-name "local/desktop/" user-emacs-directory))
+(unless (file-exists-p desktop-dirname)
+    (make-directory desktop-dirname t))
+
+(require 'desktop)
+(if (file-exists-p (desktop-full-file-name))
+    (progn
+      (desktop-save-mode t)
+      (add-hook 'desktop-after-read-hook
+                (lambda ()
+                  "Delete the current desktop file."
+                  (when desktop-dirname
+                    (let ((desktop-file (desktop-full-file-name)))
+                      (when (file-exists-p desktop-file)
+                        (delete-file desktop-file))))
+                  (desktop-save-mode -1))
+      )))
+
+(defun reload-emacs ()
+  "Save the desktop and then restart Emacs using `restart-emacs`."
+  (interactive)
+  ;; Save the current desktop
+  (desktop-save desktop-dirname)
+  ;; Use the restart-emacs function to restart Emacs
+  (restart-emacs))
+
+(global-set-key (kbd "C-c r") 'reload-emacs)
