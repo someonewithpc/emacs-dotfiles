@@ -49,8 +49,10 @@
 
   (when noninteractive
     (mapc (apply-partially-right #'treesit-install-language-grammar
-                                 (expand-file-name "local/tree-sitter-repos/" user-emacs-directory))
+                                 (expand-file-name "local/tree-sitter-languages/" user-emacs-directory))
           (mapcar #'car treesit-language-source-alist)))
+
+  (setq treesit-extra-load-path `(,(expand-file-name "local/tree-sitter-languages/" user-emacs-directory)))
 
   (setq major-mode-remap-alist
         (mapcar
