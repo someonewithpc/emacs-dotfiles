@@ -28,22 +28,22 @@ If point is already there, move to the actual end of the line."
   (let* ((initial (point))
         (bol (line-beginning-position))
         (eol (line-end-position))
-        (after-comment (search-backward comment-start bol t)))
+        (before-comment (search-forward comment-start eol t)))
 
     (defun move (invert)
-      (if after-comment
+      (if before-comment
           (if invert
-              (progn (goto-char after-comment) (backward-char) (skip-syntax-backward " "))
-            (progn
-              (goto-char eol)
-              (skip-syntax-backward " "))
-            )
-        (if (not invert)
+              (progn (goto-char eol) (skip-syntax-backward " "))
+            (progn (goto-char before-comment) (backward-char) (skip-syntax-backward " ")))
+        (if invert
             (progn
               (goto-char bol)
               (when (search-forward comment-start eol 1)
                 (progn (backward-char) (skip-syntax-backward " "))))
-          (progn (goto-char eol) (skip-syntax-backward " "))))
+          (progn
+            (goto-char eol)
+            (skip-syntax-backward " "))
+          ))
       (point))
 
     (when (= initial (move nil))
