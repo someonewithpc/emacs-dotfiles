@@ -44,4 +44,50 @@
 (use-package windmove
   :config (windmove-default-keybindings))
 
+;; -------- Helm -----------
+
+(use-package helm
+  :init
+  (setq helm-M-x-fuzzy-match t
+        helm-mode-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t
+        helm-locate-fuzzy-match t
+        helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t
+        helm-candidate-number-list 150
+        helm-split-window-in-side-p t
+        helm-move-to-line-cycle-in-source t
+        helm-echo-input-in-header-line t
+        helm-autoresize-max-height 0
+        helm-autoresize-min-height 40)
+  :config
+  (helm-mode 1)
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
+         ("C-x r b" . helm-bookmarks)
+         ("M-y" . helm-show-kill-ring)
+         ("C-h SPC" . helm-all-mark-rings)
+         :map helm-map
+         ("<tab>" . 'helm-execute-persistent-action)))
+
+(use-package helm-ag
+  :ensure t
+  :after helm)
+
+(use-package helm-swoop
+  :ensure t
+  :after helm
+  :bind (("M-i" . helm-swoop)
+         ("M-I" . helm-swoop-back-to-last-point)
+         ("C-c M-i" . helm-multi-swoop)
+         ("C-x M-i" . helm-multi-swoop-all)))
+
+(use-package helm-descbinds
+  :ensure t
+  :after helm
+  :config (helm-descbinds-mode))
+
 (provide 'interface)
