@@ -25,16 +25,30 @@ If point is already there, move to the beginning of the line."
 If there's a comment, move to the beginning of the comment.
 If point is already there, move to the actual end of the line."
   (interactive)
-  (let ((initial-pos (point))
-        (eol-pos (line-end-position)))
-    (if (and comment-start
-             (search-backward comment-start (line-beginning-position) t))
-        (progn
-          (while (and (> (point) (line-beginning-position))
-                      (looking-back (regexp-quote comment-start) (line-beginning-position)))
-            (backward-char))
-          (skip-syntax-backward " "))
-      (goto-char eol-pos))))
+  (let* ((initial (point))
+        (bol (line-beginning-position))
+        (eol (line-end-position))
+        (after-comment (search-backward comment-start bol t)))
+
+    (defun move (invert)
+      (if after-comment
+          (if invert
+              (progn (goto-char after-comment) (backward-char) (skip-syntax-backward " "))
+            (progn
+              (goto-char eol)
+              (skip-syntax-backward " "))
+            )
+        (if (not invert)
+            (progn
+              (goto-char bol)
+              (when (search-forward comment-start eol 1)
+                (progn (backward-char) (skip-syntax-backward " "))))
+          (progn (goto-char eol) (skip-syntax-backward " "))))
+      (point))
+
+    (when (= initial (move nil))
+      (move t))
+    ))
 
 (global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-logical)
 (global-set-key [remap move-end-of-line] #'move-end-of-line-logical)
