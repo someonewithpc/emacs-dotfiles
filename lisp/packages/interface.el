@@ -71,7 +71,10 @@
          ("M-y" . helm-show-kill-ring)
          ("C-h SPC" . helm-all-mark-rings)
          :map helm-map
-         ("<tab>" . 'helm-execute-persistent-action)))
+         ;;  Swap <tab> and C-j
+         ("C-j" . 'helm-select-action)
+         ("<tab>" . 'helm-execute-persistent-action)
+         ))
 
 (use-package helm-projectile
   :after (helm projectile)
