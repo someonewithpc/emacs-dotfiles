@@ -2,4 +2,4 @@ local/
 eln-cache/
 tramp
 
-.emacs-desktop.lock
+.emacs.desktop.lock

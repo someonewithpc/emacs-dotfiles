@@ -73,12 +73,21 @@
          :map helm-map
          ("<tab>" . 'helm-execute-persistent-action)))
 
-(use-package helm-ag
-  :ensure t
-  :after helm)
+(use-package helm-projectile
+  :after (helm projectile)
+  :bind (("C-x C-d" . helm-projectile))
+  )
+
+(use-package helm-rg
+  :after helm
+  :bind (("C-x a" . (lambda ()
+                      "Use `helm-rg' to search for a pattern in the current project."
+                      (interactive)
+                      (let ((default-directory (projectile-project-root)))
+                        (helm-rg nil)))))
+  )
 
 (use-package helm-swoop
-  :ensure t
   :after helm
   :bind (("M-i" . helm-swoop)
          ("M-I" . helm-swoop-back-to-last-point)
@@ -86,8 +95,12 @@
          ("C-x M-i" . helm-multi-swoop-all)))
 
 (use-package helm-descbinds
-  :ensure t
   :after helm
   :config (helm-descbinds-mode))
+
+
+(use-package projectile
+  :config
+  (projectile-mode +1))
 
 (provide 'interface)
