@@ -11,7 +11,7 @@
 (put 'overwrite-mode 'disabled "Overwrite mode is disabled becuase it's crap.")
 (global-set-key [remap overwrite-mode] 'ignore)
 
-(defun move-beginning-of-line-logical ()
+(defun move-beginning-of-line-dwim ()
   "Move point to the first non-whitespace character on this line.
 If point is already there, move to the beginning of the line."
   (interactive)
@@ -20,11 +20,7 @@ If point is already there, move to the beginning of the line."
     (when (= (point) initial-pos)
       (move-beginning-of-line nil))))
 
-(defun xor (a b)
-  (or (and a (not b))
-      (and (not a) b)))
-
-(defun move-end-of-line-logical ()
+(defun move-end-of-line-dwim ()
   "Move point to the end of the line.
 If there's a comment, move to the beginning of the comment.
 If point is already there, move to the actual end of the line."
@@ -32,15 +28,16 @@ If point is already there, move to the actual end of the line."
   (let* ((initial (point))
          (bol (line-beginning-position))
          (eol (line-end-position))
+         (indentation (save-excursion (back-to-indentation) (point)))
          (before-comment (and (save-excursion (search-forward comment-start eol t))
                               (save-excursion (not (search-backward comment-start bol t))))))
 
     (defun move (invert)
       (if (xor before-comment invert)
           (progn
-            (goto-char bol)
+            (goto-char indentation)
             (when (search-forward comment-start eol 1)
-              (progn (backward-char) (skip-syntax-backward " "))))
+              (goto-char (max indentation (save-excursion (backward-char) (skip-syntax-backward " ") (point))))))
         (progn (goto-char eol) (skip-syntax-backward " ")))
       (point))
 
@@ -48,8 +45,8 @@ If point is already there, move to the actual end of the line."
       (move t))
     ))
 
-(global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-logical)
-(global-set-key [remap move-end-of-line] #'move-end-of-line-logical)
+(global-set-key [remap move-beginning-of-line] #'move-beginning-of-line-dwim)
+(global-set-key [remap move-end-of-line] #'move-end-of-line-dwim)
 
 ;; Reload Emacs
 (setq desktop-dirname (expand-file-name "local/desktop/" user-emacs-directory))
