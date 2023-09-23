@@ -20,30 +20,28 @@ If point is already there, move to the beginning of the line."
     (when (= (point) initial-pos)
       (move-beginning-of-line nil))))
 
+(defun xor (a b)
+  (or (and a (not b))
+      (and (not a) b)))
+
 (defun move-end-of-line-logical ()
   "Move point to the end of the line.
 If there's a comment, move to the beginning of the comment.
 If point is already there, move to the actual end of the line."
   (interactive)
   (let* ((initial (point))
-        (bol (line-beginning-position))
-        (eol (line-end-position))
-        (before-comment (search-forward comment-start eol t)))
+         (bol (line-beginning-position))
+         (eol (line-end-position))
+         (before-comment (and (save-excursion (search-forward comment-start eol t))
+                              (save-excursion (not (search-backward comment-start bol t))))))
 
     (defun move (invert)
-      (if before-comment
-          (if invert
-              (progn (goto-char eol) (skip-syntax-backward " "))
-            (progn (goto-char before-comment) (backward-char) (skip-syntax-backward " ")))
-        (if invert
-            (progn
-              (goto-char bol)
-              (when (search-forward comment-start eol 1)
-                (progn (backward-char) (skip-syntax-backward " "))))
+      (if (xor before-comment invert)
           (progn
-            (goto-char eol)
-            (skip-syntax-backward " "))
-          ))
+            (goto-char bol)
+            (when (search-forward comment-start eol 1)
+              (progn (backward-char) (skip-syntax-backward " "))))
+        (progn (goto-char eol) (skip-syntax-backward " ")))
       (point))
 
     (when (= initial (move nil))
